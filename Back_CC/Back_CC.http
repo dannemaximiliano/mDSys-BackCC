@@ -1,0 +1,6 @@
+@Back_CC_HostAddress = http://localhost:5255
+
+GET {{Back_CC_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
