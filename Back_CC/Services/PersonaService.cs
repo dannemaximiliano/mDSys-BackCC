@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Back_CC.DTOs;
 using Back_CC.Models;
 using System;
+using Back_CC.DTOs.PersonaDTO;
 
 namespace Back_CC.Services
 
@@ -67,7 +67,7 @@ namespace Back_CC.Services
             return (true, "Estado de la persona actualizado.");
         }
 
-        public async Task<(bool, string)> ModificarPersona(int id, ModificarPersonaDto dto, string username)
+        public async Task<(bool, string)> ModificarPersona(int id, PersonaModificarDto dto, string username)
         {
             var persona = await _context.Personas.FindAsync(id);
             if (persona == null)
@@ -95,6 +95,34 @@ namespace Back_CC.Services
         }
 
 
+        public async Task<List<PersonaListarDto>> ListarPersonasActivas()
+        {
+            return await _context.Personas
+                .Where(p => p.Activo) // Solo trae personas activas
+                .Select(p => new PersonaListarDto
+                {
+                    Id = p.Id,
+                    Nombre = p.Nombre,
+                    Dni = p.Dni,
+                    Email = p.Email,
+                    Telefono = p.Telefono
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<PersonaListarDto>> ListarPersonas()
+        {
+            return await _context.Personas
+                .Select(p => new PersonaListarDto
+                {
+                Id = p.Id,
+                Nombre = p.Nombre,
+                Dni = p.Dni,
+                Email = p.Email,
+                Telefono = p.Telefono
+                })
+                .ToListAsync();
+        }
 
     }
 

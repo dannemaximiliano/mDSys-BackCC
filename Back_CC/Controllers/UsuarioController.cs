@@ -36,7 +36,7 @@ namespace Back_CC.Controllers
             if (!_usuarioService.VerificarPassword(loginDto.Password, usuario.Password))
                 return Unauthorized("Contraseña incorrecta.");
 
-            return Ok("Login exitoso.");
+            return Ok(usuario.Id);
         }
 
 

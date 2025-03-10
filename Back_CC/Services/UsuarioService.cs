@@ -3,6 +3,7 @@ using Back_CC.DTOs;
 using Back_CC.Models;
 using System;
 using Back_CC.DTOs.UsuarioDTO;
+using Back_CC.DTOs.PersonaDTO;
 
 namespace Back_CC.Services
 
@@ -98,6 +99,37 @@ namespace Back_CC.Services
             await _context.SaveChangesAsync();
 
             return (true, "Usuario actualizado correctamente.");
+        }
+
+        public async Task<List<UsuarioListarDto>> ListarUsuariosActivos()
+        {
+            return await _context.Usuarios
+                .Where(p => p.Activo) // Solo trae usuarios activos
+                .Select(p => new UsuarioListarDto
+                {
+                    Id = p.Id,
+                    IdPersona = p.IdPersona,
+                    Username = p.Username,
+                    Password = p.Password,
+                    IdTipoUsuario = p.IdTipoUsuario,
+                    FechaAlta = p.FechaAlta
+                })
+                .ToListAsync();
+        }
+
+        public async Task<List<UsuarioListarDto>> ListarUsuarios()
+        {
+            return await _context.Usuarios
+                .Select(p => new UsuarioListarDto
+                {
+                    Id = p.Id,
+                    IdPersona = p.IdPersona,
+                    Username = p.Username,
+                    Password = p.Password,
+                    IdTipoUsuario = p.IdTipoUsuario,
+                    FechaAlta = p.FechaAlta
+                })
+                .ToListAsync();
         }
 
 

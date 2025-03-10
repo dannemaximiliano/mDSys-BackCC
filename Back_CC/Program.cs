@@ -7,6 +7,7 @@ builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(buil
 
 builder.Services.AddScoped<UsuarioService>();
 builder.Services.AddScoped<PersonaService>();
+builder.Services.AddScoped<MovimientoService>();
 
 // Add services to the container.
 
